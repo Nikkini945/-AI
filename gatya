@@ -1,0 +1,76 @@
+<html lang="ja">
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background: gold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .rarity-N { color: #ccc; }
+    .rarity-R { color: #4fc3f7; }
+    .rarity-SR { color: #ba68c8; }
+    .rarity-SSR { color: gold; }
+  </style>
+</head>
+<body>
+
+  <h1>🎰 ガチャゲーム 🎰</h1>
+
+  <div class="gacha-box">
+    <button onclick="drawGacha()">ガチャを引く！</button>
+    <div class="result" id="result">ここに結果が出るよ</div>
+  </div>
+
+  <script>
+    const items = [
+      { name: "スライム", rarity: "N", rate: 50 },
+      { name: "ゴブリン", rarity: "N", rate: 30 },
+      { name: "ナイト", rarity: "R", rate: 10 },
+      { name: "ドラゴン", rarity: "SR", rate: 7 },
+      { name: "神龍", rarity: "SSR", rate: 3 }
+    ];
+
+    function drawGacha() {
+      let rand = Math.random() * 100;
+      let sum = 0;
+
+      for (let item of items) {
+        sum += item.rate;
+        if (rand <= sum) {
+          showResult(item);
+          break;
+        }
+      }
+    }
+
+    function showResult(item) {
+      const resultDiv = document.getElementById("result");
+      resultDiv.className = "result rarity-" + item.rarity;
+      resultDiv.textContent = item.rarity + "：" + item.name;
+
+      // 簡単な演出
+      resultDiv.style.transform = "scale(1.5)";
+      setTimeout(() => {
+        resultDiv.style.transform = "scale(1)";
+      }, 200);
+    }
+  </script>
+
+</body>
+</html>
